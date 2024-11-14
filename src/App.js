@@ -1,22 +1,27 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { database } from './firebase'; // Import the database from firebase.js
+import { ref, set, onValue } from 'firebase/database';
 
 function App() {
   const [counts, setCounts] = useState([0, 0, 0, 0]);
-
   useEffect(() => {
-    const savedCounts = JSON.parse(localStorage.getItem('counts'));
-    if (savedCounts) {
-      setCounts(savedCounts);
-    }
+    const countsRef = ref(database, 'counts');
+    onValue(countsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setCounts(data); 
+      }
+    });
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('counts', JSON.stringify(counts));
-  }, [counts]);
 
   const handleClick = (index) => {
-    setCounts(counts.map((count, i) => (i === index ? count + 1 : count)));
+    const updatedCounts = [...counts];
+    updatedCounts[index] += 1;
+    set(ref(database, 'counts'), updatedCounts);
+    setCounts(updatedCounts);
   };
 
   const groups = [
