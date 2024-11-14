@@ -1,23 +1,48 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [counts, setCounts] = useState([0, 0, 0, 0]);
+
+  useEffect(() => {
+    const savedCounts = JSON.parse(localStorage.getItem('counts'));
+    if (savedCounts) {
+      setCounts(savedCounts);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('counts', JSON.stringify(counts));
+  }, [counts]);
+
+  const handleClick = (index) => {
+    setCounts(counts.map((count, i) => (i === index ? count + 1 : count)));
+  };
+
+  const groups = [
+    { name: '天鹰', animal: 'tianying.png', color: 'skyblue', spirit: '天高地广，无畏飞翔。' },
+    { name: '凌鹰', animal: 'lingying.png', color: 'lightgreen', spirit: '凌空飞翔，勇攀高峰。' },
+    { name: '群鹰', animal: 'qunying.jpeg', color: 'Gold', spirit: '群策群力，飞向未来。' },
+    { name: '锐鹰', animal: 'ruiying.png', color: 'purple', spirit: '锐不可当，势不可挡。' }
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="header">
+        <img src="logo.png" alt="Logo" className="logo" />
       </header>
+
+      <div className="grid">
+        {groups.map((group, index) => (
+          <div key={index} className="box" style={{ borderColor: group.color }}>
+            <img src={group.animal} alt={group.name} className="animal-image" />
+            <p>{group.name}</p>
+            <p>助力: {counts[index]}</p>
+            <p className="spirit">{group.spirit}</p>
+            <button onClick={() => handleClick(index)}>Click Me</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

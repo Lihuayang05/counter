@@ -1,38 +1,182 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* General App Style */
+.app {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background-color: #f3e8e0;
+  color: #894700;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+  animation: fadeIn 2s ease-out; 
+  transition: background-color 0.5s ease;
+}
+
+/* Header Style */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+  position: relative;
+  opacity: 0;
+  animation: fadeInHeader 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+/* Logo Styling */
+.logo {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  object-fit: cover;
+  animation: logoFadeIn 2s ease-out; 
+}
+
+.logo:hover {
+  transform: translateY(-50%) scale(1.05);
+  opacity: 0.9;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid Style for Boxes (4 Columns) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 80px;
+  height: auto;
+  opacity: 0;
+  animation: gridFadeIn 2s ease-out forwards;
+  animation-delay: 1s;
+  padding: 0 20px; /* Add padding to prevent edge crowding */
+}
+
+/* Box Style */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  color: #894700;
+  text-align: center;
+  max-width: 300px;
+  border: 3px solid #894700;
+  animation: boxFadeIn 1s ease-out;
+  cursor: pointer;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9; /* Subtle change on hover */
+}
+
+/* Button Style */
+.box button {
+  background-color: #894700;
   color: white;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Added slight letter spacing for readability */
 }
 
-.App-link {
-  color: #61dafb;
+.box button:hover {
+  background-color: #6e3700;
+  transform: scale(1.05);
 }
 
-@keyframes App-logo-spin {
+/* Animal Image Styling */
+.animal-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.animal-image:hover {
+  transform: scale(1.05); /* Slight zoom-in on hover */
+}
+
+/* Fade-in Animations */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInHeader {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gridFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes boxFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  .logo {
+    height: 100px; 
+  }
+
+  .box {
+    max-width: 250px;
+    padding: 20px; 
+  }
+
+  .animal-image {
+    width: 80px;
   }
 }
